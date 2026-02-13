@@ -1,0 +1,34 @@
+﻿@page
+@model razor_page.Pages.DangKyModel
+@{
+    ViewData["Title"] = "Đăng Ký";
+}
+
+<div class="container mt-5">
+    <h2>Đăng Ký Tài Khoản</h2>
+
+    @if (!string.IsNullOrEmpty(Model.ThongBaoLoi))
+    {
+        <div class="alert alert-danger">@Model.ThongBaoLoi</div>
+    }
+
+    <form method="post">
+        <div class="mb-3">
+            <label>Họ tên</label>
+            <input asp-for="NguoiDung.TenNguoiDung" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label>Email</label>
+            <input asp-for="NguoiDung.Email" type="email" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label>Mật khẩu</label>
+            <input asp-for="NguoiDung.MatKhau" type="password" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label>Xác nhận mật khẩu</label>
+            <input name="XacNhanMatKhau" type="password" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng Ký</button>
+    </form>
+</div>
