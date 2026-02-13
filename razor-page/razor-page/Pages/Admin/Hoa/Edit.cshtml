@@ -1,0 +1,36 @@
+﻿@page
+@model razor_page.Pages.Admin.Hoa.EditModel
+@{
+    ViewData["Title"] = "Chỉnh sửa Hoa";
+}
+
+<h1>Chỉnh sửa Hoa</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input type="hidden" asp-for="Hoa.HoaId" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Hoa.TenHoa" class="control-label">Tên Hoa</label>
+                <input asp-for="Hoa.TenHoa" class="form-control" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Hoa.GiaBan" class="control-label">Giá Bán</label>
+                <input asp-for="Hoa.GiaBan" class="form-control" type="number" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Hoa.LinkHinhAnh" class="control-label">Link Hình Ảnh</label>
+                <input asp-for="Hoa.LinkHinhAnh" class="form-control" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Hoa.MoTa" class="control-label">Mô Tả</label>
+                <textarea asp-for="Hoa.MoTa" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn btn-secondary">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>

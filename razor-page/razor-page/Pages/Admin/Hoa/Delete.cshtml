@@ -1,0 +1,24 @@
+﻿@page
+@model razor_page.Pages.Admin.Hoa.DeleteModel
+@{
+    ViewData["Title"] = "Xóa Hoa";
+}
+
+<h1>Xóa Hoa</h1>
+
+<h3>Bạn có chắc chắn muốn xóa hoa này không?</h3>
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Tên Hoa</dt>
+        <dd class="col-sm-10">@Model.Hoa.TenHoa</dd>
+
+        <dt class="col-sm-2">Giá Bán</dt>
+        <dd class="col-sm-10">@Model.Hoa.GiaBan</dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Hoa.HoaId" />
+        <input type="submit" value="Xóa" class="btn btn-danger" /> |
+        <a asp-page="./Index" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>

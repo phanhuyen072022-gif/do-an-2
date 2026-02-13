@@ -1,0 +1,43 @@
+﻿@page
+@model razor_page.Pages.Admin.Hoa.IndexModel
+@{
+    ViewData["Title"] = "Quản lý Hoa";
+}
+
+<h1>Danh sách Hoa</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Tạo mới</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên Hoa</th>
+            <th>Giá Bán</th>
+            <th>Hình Ảnh</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Hoas)
+        {
+            <tr>
+                <td>@item.HoaId</td>
+                <td>@item.TenHoa</td>
+                <td>@item.GiaBan.ToString("N0") VNĐ</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.LinkHinhAnh))
+                    {
+                        <img src="@item.LinkHinhAnh" style="max-width: 50px;" />
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.HoaId" class="btn btn-warning btn-sm">Sửa</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.HoaId" class="btn btn-danger btn-sm">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
