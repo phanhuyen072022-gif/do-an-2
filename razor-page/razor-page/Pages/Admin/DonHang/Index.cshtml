@@ -1,0 +1,42 @@
+﻿@page
+@model razor_page.Pages.Admin.DonHang.IndexModel
+@{
+    ViewData["Title"] = "Quản lý Đơn Hàng";
+}
+
+<h1>Danh sách Đơn Hàng</h1>
+<p><a asp-page="Create" class="btn btn-primary">Tạo Đơn Hàng Mới</a></p>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên Đơn</th>
+            <th>Khách Hàng</th>
+            <th>Hoa</th>
+            <th>Số Lượng</th>
+            <th>Tổng Tiền</th>
+            <th>Ngày Đặt</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.DonHangs)
+        {
+            <tr>
+                <td>@item.DonHangId</td>
+                <td>@item.TenDonHang</td>
+                <td>@(item.NguoiDung?.TenNguoiDung ?? "N/A")</td>
+                <td>@(item.Hoa?.TenHoa ?? "N/A")</td>
+                <td>@item.SoLuong</td>
+                <td>@item.GiaDonHang.ToString("N0") VNĐ</td>
+                <td>@item.ThoiGianDat?.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.DonHangId" class="btn btn-warning btn-sm">Sửa</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.DonHangId" class="btn btn-danger btn-sm">Xóa</a> |
+                    <a asp-page="./ThanhToan" asp-route-id="@item.DonHangId" class="btn btn-success btn-sm">Thanh Toán</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

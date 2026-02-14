@@ -1,0 +1,47 @@
+﻿@page
+@model razor_page.Pages.Admin.DonHang.ThanhToanModel
+@{
+    ViewData["Title"] = "Thanh Toán Đơn Hàng";
+}
+
+<h1>Thanh Toán cho Đơn Hàng: @Model.DonHang.TenDonHang</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-4">Tổng tiền đơn hàng:</dt>
+            <dd class="col-sm-8">@Model.DonHang.GiaDonHang.ToString("N0") VNĐ</dd>
+
+            <dt class="col-sm-4">Khách hàng:</dt>
+            <dd class="col-sm-8">@Model.DonHang.NguoiDung.TenNguoiDung</dd>
+        </dl>
+        <hr />
+        <h4>Lịch sử thanh toán</h4>
+        <ul>
+            @foreach (var tt in Model.DonHang.ThanhToans)
+            {
+                <li>@tt.ThoiGianThanhToan - @tt.TienDaThanhToan.ToString("N0") VNĐ - @tt.TrangThai</li>
+            }
+        </ul>
+        <hr />
+
+        <form method="post">
+            <div class="form-group mb-3">
+                <label asp-for="SoTienThanhToan" class="control-label">Số Tiền Thanh Toán</label>
+                <input asp-for="SoTienThanhToan" class="form-control" type="number" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="TrangThai" class="control-label">Trạng Thái</label>
+                <select asp-for="TrangThai" class="form-control">
+                    <option value="Đã thanh toán">Đã thanh toán</option>
+                    <option value="Thanh toán một phần">Thanh toán một phần</option>
+                    <option value="Chờ xử lý">Chờ xử lý</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Xác nhận Thanh Toán" class="btn btn-success" />
+                <a asp-page="Index" class="btn btn-secondary">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div>

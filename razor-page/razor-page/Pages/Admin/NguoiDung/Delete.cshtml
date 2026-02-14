@@ -1,4 +1,35 @@
 ﻿@page
 @model razor_page.Pages.Admin.NguoiDung.DeleteModel
 @{
+    ViewData["Title"] = "Xóa Người Dùng";
 }
+
+<h1>Xóa Người Dùng</h1>
+
+<h3>Bạn có chắc chắn muốn xóa người dùng này không?</h3>
+<div>
+    <dl class="row border p-3">
+        <dt class="col-sm-2">Tên</dt>
+        <dd class="col-sm-10">@Model.NguoiDung.TenNguoiDung</dd>
+
+        <dt class="col-sm-2">Email</dt>
+        <dd class="col-sm-10">@Model.NguoiDung.Email</dd>
+
+        <dt class="col-sm-2">Quyền</dt>
+        <dd class="col-sm-10">@Model.NguoiDung.Quyen</dd>
+
+        <dt class="col-sm-2">Avatar</dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.NguoiDung.LinkAvatar))
+            {
+                <img src="@Model.NguoiDung.LinkAvatar" style="max-width: 100px;" />
+            }
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="NguoiDung.NguoiDungId" />
+        <input type="submit" value="Xóa" class="btn btn-danger" /> |
+        <a asp-page="./Index" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>

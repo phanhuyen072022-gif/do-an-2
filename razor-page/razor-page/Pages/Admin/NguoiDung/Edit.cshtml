@@ -1,4 +1,48 @@
 ﻿@page
 @model razor_page.Pages.Admin.NguoiDung.EditModel
 @{
+    ViewData["Title"] = "Chỉnh sửa Người Dùng";
 }
+
+<h1>Chỉnh sửa Người Dùng</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <input type="hidden" asp-for="NguoiDung.NguoiDungId" />
+
+            <div class="form-group mb-3">
+                <label asp-for="NguoiDung.TenNguoiDung" class="control-label">Tên Người Dùng</label>
+                <input asp-for="NguoiDung.TenNguoiDung" class="form-control" />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="NguoiDung.Email" class="control-label">Email</label>
+                <input asp-for="NguoiDung.Email" class="form-control" />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="NguoiDung.MatKhau" class="control-label">Mật Khẩu</label>
+                <input asp-for="NguoiDung.MatKhau" class="form-control" type="text" />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="NguoiDung.Quyen" class="control-label">Quyền</label>
+                <select asp-for="NguoiDung.Quyen" class="form-control">
+                    <option value="KhachHang">Khách Hàng</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="NguoiDung.LinkAvatar" class="control-label">Link Avatar</label>
+                <input asp-for="NguoiDung.LinkAvatar" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn btn-secondary">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>

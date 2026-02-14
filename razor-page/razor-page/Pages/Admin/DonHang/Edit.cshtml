@@ -1,0 +1,38 @@
+﻿@page
+@model razor_page.Pages.Admin.DonHang.EditModel
+@{
+    ViewData["Title"] = "Sửa Đơn Hàng";
+}
+
+<h1>Sửa Đơn Hàng</h1>
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <input type="hidden" asp-for="DonHang.DonHangId" />
+            <div class="form-group mb-3">
+                <label asp-for="DonHang.TenDonHang" class="control-label">Tên Đơn Hàng</label>
+                <input asp-for="DonHang.TenDonHang" class="form-control" />
+            </div>
+            <div class="form-group mb-3">
+                <label class="control-label">Khách Hàng</label>
+                <select asp-for="DonHang.NguoiDungId" class="form-control" asp-items="Model.NguoiDungList"></select>
+            </div>
+            <div class="form-group mb-3">
+                <label class="control-label">Hoa</label>
+                <select asp-for="DonHang.HoaId" class="form-control" asp-items="Model.HoaList"></select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DonHang.SoLuong" class="control-label">Số Lượng</label>
+                <input asp-for="DonHang.SoLuong" class="form-control" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DonHang.GiaDonHang" class="control-label">Giá Đơn Hàng</label>
+                <input asp-for="DonHang.GiaDonHang" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a asp-page="Index" class="btn btn-secondary">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div>

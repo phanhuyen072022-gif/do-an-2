@@ -1,4 +1,59 @@
 ﻿@page
 @model razor_page.Pages.Admin.NguoiDung.IndexModel
 @{
+    ViewData["Title"] = "Quản lý Người Dùng";
 }
+
+<h1>Danh sách Người Dùng</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Tạo mới</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên Người Dùng</th>
+            <th>Email</th>
+            <th>Quyền</th>
+            <th>Avatar</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.NguoiDungs)
+        {
+            <tr>
+                <td>@item.NguoiDungId</td>
+                <td>@item.TenNguoiDung</td>
+                <td>@item.Email</td>
+                <td>
+                    @if (item.Quyen == "Admin")
+                    {
+                        <span class="badge bg-danger">@item.Quyen</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-info text-dark">@item.Quyen</span>
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.LinkAvatar))
+                    {
+                        <img src="@item.LinkAvatar" style="max-width: 50px; border-radius: 50%;" alt="Avatar" />
+                    }
+                    else
+                    {
+                        <span>Chưa có</span>
+                    }
+                </td>
+                <td>
+                    @* Truyền ID sang trang Edit và Delete *@
+                    <a asp-page="./Edit" asp-route-id="@item.NguoiDungId" class="btn btn-warning btn-sm">Sửa</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.NguoiDungId" class="btn btn-danger btn-sm">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

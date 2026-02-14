@@ -11,7 +11,10 @@ builder.Services.AddSession();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddScoped<ServiceHoa>();
+builder.Services.AddScoped<ServiceNguoiDung>();
+builder.Services.AddScoped<ServiceDonHang>();
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
