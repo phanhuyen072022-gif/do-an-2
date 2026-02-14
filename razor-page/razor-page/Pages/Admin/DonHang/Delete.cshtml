@@ -1,4 +1,30 @@
 ﻿@page
 @model razor_page.Pages.Admin.DonHang.DeleteModel
 @{
+    ViewData["Title"] = "Xóa Đơn Hàng";
 }
+
+<h1>Xóa Đơn Hàng</h1>
+<h3>Bạn có chắc chắn muốn xóa đơn hàng này không?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Tên Đơn Hàng</dt>
+        <dd class="col-sm-9">@Model.DonHang.TenDonHang</dd>
+
+        <dt class="col-sm-3">Khách Hàng</dt>
+        <dd class="col-sm-9">@Model.DonHang.NguoiDung?.TenNguoiDung</dd>
+
+        <dt class="col-sm-3">Loại Hoa</dt>
+        <dd class="col-sm-9">@Model.DonHang.Hoa?.TenHoa</dd>
+
+        <dt class="col-sm-3">Tổng Tiền</dt>
+        <dd class="col-sm-9">@Model.DonHang.GiaDonHang.ToString("N0") VNĐ</dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="DonHang.DonHangId" />
+        <input type="submit" value="Xóa Đơn Hàng" class="btn btn-danger" /> |
+        <a asp-page="./Index" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>

@@ -116,5 +116,9 @@ namespace razor_page.Services
         // Helper: Lấy danh sách Hoa và User cho Dropdown
         public List<Hoa> GetListHoa() => _context.Hoas.ToList();
         public List<NguoiDung> GetListNguoiDung() => _context.NguoiDungs.ToList();
+        public List<NguoiDung> GetListKhachHang()
+        {
+            return _context.NguoiDungs.Where(n => n.Quyen == "KhachHang").ToList();
+        }
     }
 }

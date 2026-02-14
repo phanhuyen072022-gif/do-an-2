@@ -19,7 +19,7 @@ namespace razor_page.Pages.Admin.DonHang
 
         public void OnGet()
         {
-            NguoiDungList = new SelectList(_service.GetListNguoiDung(), "NguoiDungId", "TenNguoiDung");
+            NguoiDungList = new SelectList(_service.GetListKhachHang(), "NguoiDungId", "TenNguoiDung");
             HoaList = new SelectList(_service.GetListHoa(), "HoaId", "TenHoa");
         }
 
