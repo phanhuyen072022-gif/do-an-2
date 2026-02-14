@@ -1,0 +1,56 @@
+﻿@page "{id:int}"
+@model razor_page.Pages.ChiTietSanPhamModel
+@{
+    ViewData["Title"] = "Chi Tiết Sản Phẩm";
+}
+
+<div class="container py-5">
+    @* Nút quay lại *@
+    <a asp-page="/SanPham" class="text-decoration-none text-dark mb-4 d-inline-block fw-bold">
+        &larr; Quay lại danh sách
+    </a>
+
+    <div class="row gx-5">
+        <div class="col-md-6 mb-4">
+            <div class="bg-light d-flex align-items-center justify-content-center" style="min-height: 500px;">
+                <img src="@(string.IsNullOrEmpty(Model.Hoa.LinkHinhAnh) ? "https://images.unsplash.com/photo-1563241598-bb5ca755ee61?auto=format&fit=crop&q=80" : Model.Hoa.LinkHinhAnh)"
+                     class="img-fluid w-100 object-fit-cover" style="max-height: 600px;" alt="@Model.Hoa.TenHoa">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h1 class="display-5 fw-bold mb-3">@Model.Hoa.TenHoa</h1>
+            <p class="fs-4 fw-bold text-danger mb-4">@Model.Hoa.GiaBan.ToString("N0") đ</p>
+
+            <div class="mb-5">
+                <h5 class="fw-bold text-uppercase" style="font-size: 0.9rem;">Mô tả sản phẩm</h5>
+                <p class="text-secondary">
+                    @(string.IsNullOrEmpty(Model.Hoa.MoTa) ? "Đang cập nhật mô tả cho sản phẩm này." : Model.Hoa.MoTa)
+                </p>
+            </div>
+
+            <div class="card border-0 bg-light rounded-0 p-4">
+                <form method="post">
+                    <h5 class="fw-bold mb-3">Đặt Hàng Ngay</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Số lượng</label>
+                        <input type="number" asp-for="SoLuong" class="form-control rounded-0 border-secondary" min="1" value="1" required>
+                    </div>
+
+                    @* Kiểm tra nếu người dùng chưa đăng nhập thì hiện thông báo nhỏ *@
+                    @if (HttpContext.Session.GetInt32("UserId") == null)
+                    {
+                        <div class="alert alert-warning small py-2 rounded-0 border-0 mb-3">
+                            Bạn cần <a asp-page="/DangNhap" class="fw-bold text-dark">đăng nhập</a> để đặt hàng.
+                        </div>
+                    }
+
+                    <button type="submit" class="btn btn-dark w-100 rounded-pill py-3 fw-bold text-uppercase mt-2">
+                        Thêm Vào Giỏ & Đặt Ngay
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
