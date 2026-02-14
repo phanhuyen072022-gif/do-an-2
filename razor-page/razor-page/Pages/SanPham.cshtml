@@ -1,0 +1,134 @@
+﻿@page
+@model razor_page.Pages.SanPhamModel
+@{
+    ViewData["Title"] = "Sản Phẩm";
+}
+
+<style>
+    /* Phong cách UI tối giản Nike */
+    .nike-filter-sidebar {
+        position: sticky;
+        top: 20px;
+        height: fit-content;
+        padding-right: 20px;
+    }
+
+    .nike-product-card {
+        border: none;
+        transition: transform 0.3s ease;
+    }
+
+        .nike-product-card img {
+            object-fit: cover;
+            height: 380px;
+            width: 100%;
+            background-color: #f5f5f5;
+            border-radius: 0; /* Bo góc bằng 0 cứng cáp giống Nike */
+        }
+
+        .nike-product-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .form-select, .form-control {
+        border-radius: 0;
+        border: 1px solid #ccc;
+        padding: 10px 15px;
+    }
+
+        .form-select:focus, .form-control:focus {
+            border-color: #111;
+            box-shadow: none;
+        }
+
+    .btn-nike {
+        background-color: #111;
+        color: #fff;
+        border-radius: 30px;
+        padding: 12px 24px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+        .btn-nike:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+    .filter-heading {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<div class="container-fluid px-md-5 py-4">
+    <div class="d-flex justify-content-between align-items-end mb-4 border-bottom pb-4 mt-3">
+        <h1 class="display-5 fw-bold mb-0 text-uppercase">Tất cả sản phẩm</h1>
+        <p class="text-secondary fw-bold mb-0">(@Model.DanhSachHoa.Count) Kết quả</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 col-lg-2 d-none d-md-block nike-filter-sidebar">
+            <form method="get" id="filterForm">
+                <div class="mb-4">
+                    <div class="filter-heading">Sắp xếp</div>
+                    <select class="form-select" asp-for="SortOrder" onchange="document.getElementById('filterForm').submit();">
+                        <option value="">Nổi bật nhất</option>
+                        <option value="price_asc">Giá: Thấp - Cao</option>
+                        <option value="price_desc">Giá: Cao - Thấp</option>
+                        <option value="name_asc">Tên: A - Z</option>
+                        <option value="name_desc">Tên: Z - A</option>
+                    </select>
+                </div>
+
+                <div class="mb-4 border-top pt-4">
+                    <div class="filter-heading">Tìm kiếm</div>
+                    <input type="text" class="form-control mb-2" asp-for="SearchQuery" placeholder="Tên loại hoa...">
+                </div>
+
+                <div class="mb-4 border-top pt-4">
+                    <div class="filter-heading">Lọc theo giá</div>
+                    <input type="number" class="form-control mb-2" asp-for="MinPrice" placeholder="Từ mức giá (đ)">
+                    <input type="number" class="form-control mb-4" asp-for="MaxPrice" placeholder="Đến mức giá (đ)">
+                    <button type="submit" class="btn btn-nike w-100">Áp Dụng Lọc</button>
+
+                    @if (!string.IsNullOrEmpty(Model.SearchQuery) || Model.MinPrice.HasValue || Model.MaxPrice.HasValue)
+                    {
+                        <a asp-page="/SanPham" class="btn btn-outline-dark w-100 rounded-pill mt-3 fw-bold">Xóa Lọc</a>
+                    }
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-9 col-lg-10">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                @if (Model.DanhSachHoa.Any())
+                {
+                    @foreach (var item in Model.DanhSachHoa)
+                    {
+                        <div class="col">
+                            <div class="card nike-product-card h-100">
+                                <img src="@(string.IsNullOrEmpty(item.LinkHinhAnh) ? "https://images.unsplash.com/photo-1563241598-bb5ca755ee61?auto=format&fit=crop&q=80" : item.LinkHinhAnh)" class="card-img-top" alt="@item.TenHoa">
+                                <div class="card-body px-0 pt-3 pb-0">
+                                    <h5 class="card-title fw-bold mb-1">@item.TenHoa</h5>
+                                    <p class="card-text text-secondary mb-2 text-truncate">@(string.IsNullOrEmpty(item.MoTa) ? "Mô tả đang cập nhật" : item.MoTa)</p>
+                                    <p class="card-text fw-bold fs-5">@item.GiaBan.ToString("N0") đ</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center py-5">
+                        <h3 class="text-secondary fw-bold">KHÔNG TÌM THẤY SẢN PHẨM NÀO PHÙ HỢP.</h3>
+                        <p>Vui lòng thử nghiệm lại bằng bộ lọc khác.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
