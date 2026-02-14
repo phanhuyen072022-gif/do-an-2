@@ -120,5 +120,15 @@ namespace razor_page.Services
         {
             return _context.NguoiDungs.Where(n => n.Quyen == "KhachHang").ToList();
         }
+        // Lấy danh sách đơn hàng của một khách hàng cụ thể
+        public List<DonHang> GetByUserId(int userId)
+        {
+            return _context.DonHangs
+                .Include(d => d.Hoa)           // Để lấy tên hoa
+                .Include(d => d.ThanhToans)    // Để tính toán số tiền đã thanh toán
+                .Where(d => d.NguoiDungId == userId)
+                .OrderByDescending(d => d.ThoiGianDat)
+                .ToList();
+        }
     }
 }

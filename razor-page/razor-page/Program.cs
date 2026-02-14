@@ -6,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 
+// Thêm dòng này để truy cập HttpContext trong các View/Layout
+builder.Services.AddHttpContextAccessor();
+
 // Thêm dòng này để đăng ký dịch vụ Session
 builder.Services.AddSession();
 
@@ -33,6 +36,5 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.UseSession();
-
 
 app.Run();
