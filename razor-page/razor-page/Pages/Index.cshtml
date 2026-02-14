@@ -3,7 +3,6 @@
 @using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Trang chủ";
-    // Thay Context thành HttpContext
     var userRole = HttpContext.Session.GetString("UserRole");
     var userName = HttpContext.Session.GetString("UserName");
 }
@@ -11,7 +10,7 @@
 <div class="text-center">
     @if (userRole == "Admin")
     {
-        <h1 class="display-4 mb-3">Trang Quản Trị Admin</h1>
+        <h1 class="display-4 mb-3 mt-4">Trang Quản Trị Admin</h1>
         <p class="lead mb-5">Xin chào <strong>@userName</strong>, vui lòng chọn chức năng quản lý bên dưới:</p>
 
         <div class="container">
@@ -24,25 +23,22 @@
                         </div>
                     </a>
                 </div>
-
                 <div class="col-md-6 col-lg-3 mb-4">
                     <a asp-page="/Admin/NguoiDung/Index" class="card text-white bg-success h-100 text-decoration-none shadow-sm hover-shadow">
                         <div class="card-body d-flex align-items-center justify-content-center flex-column py-5">
                             <h3 class="card-title">👥 Người Dùng</h3>
-                            <p class="card-text">Quản lý tài khoản khách hàng</p>
+                            <p class="card-text">Quản lý tài khoản</p>
                         </div>
                     </a>
                 </div>
-
                 <div class="col-md-6 col-lg-3 mb-4">
                     <a asp-page="/Admin/DonHang/Index" class="card text-white bg-warning h-100 text-decoration-none shadow-sm hover-shadow">
                         <div class="card-body d-flex align-items-center justify-content-center flex-column py-5">
                             <h3 class="card-title text-dark">📦 Đơn Hàng</h3>
-                            <p class="card-text text-dark">Xem và xử lý đơn hàng</p>
+                            <p class="card-text text-dark">Xem và xử lý đơn</p>
                         </div>
                     </a>
                 </div>
-
                 <div class="col-md-6 col-lg-3 mb-4">
                     <a asp-page="/Admin/ThanhToan/Index" class="card text-white bg-info h-100 text-decoration-none shadow-sm hover-shadow">
                         <div class="card-body d-flex align-items-center justify-content-center flex-column py-5">
@@ -56,19 +52,85 @@
     }
     else
     {
-        <h1 class="display-4">Chào mừng đến với Shop Hoa</h1>
-        <p class="lead">Nơi cung cấp những mẫu hoa tươi đẹp nhất cho mọi dịp.</p>
-        <hr class="my-4">
-        <p>Hãy đăng nhập để trải nghiệm dịch vụ tốt nhất.</p>
+        <div class="home-page-wrapper text-start">
 
-        @if (HttpContext.Session.GetString("UserEmail") == null)
-        {
-            <a class="btn btn-primary btn-lg" asp-page="/DangNhap" role="button">Đăng nhập ngay</a>
-        }
+            <section class="break-container hero-section d-flex align-items-end pb-5">
+                <div class="ms-5 ps-md-5 mb-5 text-white hero-content">
+                    <h1 class="display-2 fw-bold text-uppercase">Mùa Xuân<br>Đang Gọi Tên</h1>
+                    <p class="fs-4 mb-4">Khám phá bộ sưu tập hoa tươi mới nhất dành riêng cho bạn.</p>
+                    <a href="#" class="btn btn-light rounded-pill px-4 py-2 fw-bold fs-5 btn-hover-dark">Khám Phá Ngay</a>
+                </div>
+            </section>
+
+            <section class="mt-5 pt-4">
+                <div class="d-flex justify-content-between align-items-end mb-4">
+                    <h2 class="fw-bold fs-1">Nổi Bật Tuần Này</h2>
+                    <div class="d-none d-md-flex gap-2 mb-2">
+                        <button class="btn btn-light rounded-circle border p-3"><i class="fw-bold">&lt;</i></button>
+                        <button class="btn btn-light rounded-circle border p-3"><i class="fw-bold">&gt;</i></button>
+                    </div>
+                </div>
+
+                <div class="horizontal-scroller pb-4">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1563241598-bb5ca755ee61?q=80&w=800&auto=format&fit=crop" alt="Hoa Hồng" class="img-fluid mb-3">
+                        <h4 class="fw-bold">Bó Hoa Hồng Đỏ</h4>
+                        <p class="text-secondary fs-5">Tình yêu nồng cháy</p>
+                        <p class="fw-bold fs-5 mt-2">550,000 đ</p>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?q=80&w=800&auto=format&fit=crop" alt="Hoa Cẩm Tú Cầu" class="img-fluid mb-3">
+                        <h4 class="fw-bold">Cẩm Tú Cầu Xanh</h4>
+                        <p class="text-secondary fs-5">Sự chân thành</p>
+                        <p class="fw-bold fs-5 mt-2">450,000 đ</p>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?q=80&w=800&auto=format&fit=crop" alt="Hoa Hướng Dương" class="img-fluid mb-3">
+                        <h4 class="fw-bold">Hướng Dương Rực Rỡ</h4>
+                        <p class="text-secondary fs-5">Năng lượng tích cực</p>
+                        <p class="fw-bold fs-5 mt-2">350,000 đ</p>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1490750967868-88cb4ecb07cb?q=80&w=800&auto=format&fit=crop" alt="Hoa Tulip" class="img-fluid mb-3">
+                        <h4 class="fw-bold">Tulip Hà Lan</h4>
+                        <p class="text-secondary fs-5">Thanh lịch, sang trọng</p>
+                        <p class="fw-bold fs-5 mt-2">600,000 đ</p>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1562690868-60bbe7293e94?q=80&w=800&auto=format&fit=crop" alt="Hoa Ly" class="img-fluid mb-3">
+                        <h4 class="fw-bold">Ly Hồng Quý Phái</h4>
+                        <p class="text-secondary fs-5">Hương thơm ngây ngất</p>
+                        <p class="fw-bold fs-5 mt-2">500,000 đ</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="break-container full-width-image position-relative mt-5">
+                <div class="position-absolute top-50 start-50 translate-middle text-center text-white w-100">
+                    <h2 class="display-3 fw-bold text-uppercase">Vẻ Đẹp Từ Thiên Nhiên</h2>
+                    <a href="#" class="btn btn-light rounded-pill px-4 py-2 mt-3 fw-bold btn-hover-dark">Tìm Hiểu Thêm</a>
+                </div>
+            </section>
+
+            <section class="mt-5 pt-5 pb-5 mb-5 text-center px-md-5 mx-md-5">
+                <h2 class="display-5 fw-bold font-italic" style="letter-spacing: -1px; line-height: 1.2;">
+                    "Hoa là ngôn ngữ vô thanh của tình yêu, là nụ cười rạng rỡ nhất mà Trái Đất dành tặng cho chúng ta."
+                </h2>
+                <div class="mt-4 pt-3">
+                    @if (HttpContext.Session.GetString("UserEmail") == null)
+                    {
+                        <p class="fs-5 text-secondary mb-3">Tham gia cùng chúng tôi để nhận những ưu đãi đặc biệt.</p>
+                        <a class="btn btn-dark rounded-pill px-5 py-3 fs-5 fw-bold" asp-page="/DangKy">Đăng ký thành viên</a>
+                        <p class="mt-3"><a class="text-dark fw-bold" asp-page="/DangNhap">Đã có tài khoản? Đăng nhập</a></p>
+                    }
+                </div>
+            </section>
+        </div>
     }
 </div>
 
 <style>
+    /* Style riêng cho các thẻ card của trang Admin */
     .hover-shadow:hover {
         transform: translateY(-5px);
         transition: all 0.3s ease;
