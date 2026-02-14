@@ -1,10 +1,77 @@
 ﻿@page
 @model IndexModel
+@using Microsoft.AspNetCore.Http
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Trang chủ";
+    // Thay Context thành HttpContext
+    var userRole = HttpContext.Session.GetString("UserRole");
+    var userName = HttpContext.Session.GetString("UserName");
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (userRole == "Admin")
+    {
+        <h1 class="display-4 mb-3">Trang Quản Trị Admin</h1>
+        <p class="lead mb-5">Xin chào <strong>@userName</strong>, vui lòng chọn chức năng quản lý bên dưới:</p>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <a asp-page="/Admin/Hoa/Index" class="card text-white bg-primary h-100 text-decoration-none shadow-sm hover-shadow">
+                        <div class="card-body d-flex align-items-center justify-content-center flex-column py-5">
+                            <h3 class="card-title">🌸 Hoa</h3>
+                            <p class="card-text">Quản lý danh sách hoa</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <a asp-page="/Admin/NguoiDung/Index" class="card text-white bg-success h-100 text-decoration-none shadow-sm hover-shadow">
+                        <div class="card-body d-flex align-items-center justify-content-center flex-column py-5">
+                            <h3 class="card-title">👥 Người Dùng</h3>
+                            <p class="card-text">Quản lý tài khoản khách hàng</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <a asp-page="/Admin/DonHang/Index" class="card text-white bg-warning h-100 text-decoration-none shadow-sm hover-shadow">
+                        <div class="card-body d-flex align-items-center justify-content-center flex-column py-5">
+                            <h3 class="card-title text-dark">📦 Đơn Hàng</h3>
+                            <p class="card-text text-dark">Xem và xử lý đơn hàng</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <a asp-page="/Admin/ThanhToan/Index" class="card text-white bg-info h-100 text-decoration-none shadow-sm hover-shadow">
+                        <div class="card-body d-flex align-items-center justify-content-center flex-column py-5">
+                            <h3 class="card-title">💳 Thanh Toán</h3>
+                            <p class="card-text">Phương thức thanh toán</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1 class="display-4">Chào mừng đến với Shop Hoa</h1>
+        <p class="lead">Nơi cung cấp những mẫu hoa tươi đẹp nhất cho mọi dịp.</p>
+        <hr class="my-4">
+        <p>Hãy đăng nhập để trải nghiệm dịch vụ tốt nhất.</p>
+
+        @if (HttpContext.Session.GetString("UserEmail") == null)
+        {
+            <a class="btn btn-primary btn-lg" asp-page="/DangNhap" role="button">Đăng nhập ngay</a>
+        }
+    }
 </div>
+
+<style>
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        transition: all 0.3s ease;
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+    }
+</style>
