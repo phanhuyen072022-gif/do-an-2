@@ -9,27 +9,28 @@
 
     @if (!string.IsNullOrEmpty(Model.ThongBao))
     {
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
             @Model.ThongBao
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     }
 
-    <form method="post" enctype="multipart/form-data" class="card shadow-sm p-4">
+    <form method="post" class="card shadow-sm p-4">
+
         <div class="row">
             <div class="col-md-4 text-center border-end">
                 @{
                     // Hiển thị ảnh Avatar hiện tại hoặc ảnh mặc định
                     var avatarUrl = string.IsNullOrEmpty(Model.ThongTinNguoiDung.LinkAvatar)
-                                    ? "/images/default-avatar.png"
-                                    : Model.ThongTinNguoiDung.LinkAvatar;
+                    ? "/images/default-avatar.png"
+                    : Model.ThongTinNguoiDung.LinkAvatar;
                 }
                 <img src="@avatarUrl" alt="Avatar" class="img-thumbnail rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;" />
 
                 <div class="mb-3 text-start">
-                    <label for="AvatarUpload" class="form-label fw-bold">Đổi ảnh đại diện</label>
-                    <input class="form-control" type="file" id="AvatarUpload" asp-for="AvatarUpload" accept="image/*">
-                    <small class="text-muted">Chọn ảnh có định dạng .jpg, .png</small>
+                    <label class="form-label fw-bold">Đường link ảnh đại diện mới</label>
+                    <input class="form-control" type="text" asp-for="LinkAvatarMoi" placeholder="Nhập đường dẫn (URL) ảnh của bạn...">
+                    <small class="text-muted">Ví dụ: https://example.com/anh-cua-toi.jpg</small>
                 </div>
             </div>
 
@@ -50,10 +51,22 @@
                 <hr class="my-4" />
                 <h5 class="mb-3 text-danger">Bảo mật</h5>
 
+                @if (!string.IsNullOrEmpty(Model.LoiMatKhau))
+                {
+                    <div class="alert alert-danger p-2">
+                        @Model.LoiMatKhau
+                    </div>
+                }
+
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Đổi Mật khẩu mới</label>
-                    <input type="password" class="form-control" asp-for="MatKhauMoi" placeholder="Nhập mật khẩu mới nếu muốn đổi..." />
-                    <small class="text-muted">Bỏ trống ô này nếu bạn KHÔNG muốn đổi mật khẩu.</small>
+                    <label class="form-label fw-bold">Mật khẩu cũ</label>
+                    <input type="password" class="form-control" asp-for="MatKhauCu" placeholder="Nhập mật khẩu cũ nếu muốn đổi mật khẩu..." />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Mật khẩu mới</label>
+                    <input type="password" class="form-control" asp-for="MatKhauMoi" placeholder="Nhập mật khẩu mới..." />
+                    <small class="text-muted">Bỏ trống 2 ô này nếu bạn KHÔNG muốn đổi mật khẩu.</small>
                 </div>
 
                 <div class="text-end mt-4">
