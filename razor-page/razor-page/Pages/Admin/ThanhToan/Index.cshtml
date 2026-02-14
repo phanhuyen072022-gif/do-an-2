@@ -1,0 +1,48 @@
+﻿@page
+@model razor_page.Pages.Admin.ThanhToan.IndexModel
+@{
+    ViewData["Title"] = "Quản lý Thanh Toán";
+}
+
+<h1>Danh sách Thanh Toán</h1>
+
+<table class="table table-bordered table-hover mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Mã Đơn Hàng</th>
+            <th>Tên Đơn Hàng</th>
+            <th>Tiền Đã Thanh Toán</th>
+            <th>Giá Đơn Hàng</th>
+            <th>Trạng Thái</th>
+            <th>Ngày Thanh Toán</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ThanhToans)
+        {
+            <tr>
+                <td>@item.ThanhToanId</td>
+                <td>@item.DonHangId</td>
+                <td>@(item.DonHang?.TenDonHang ?? "N/A")</td>
+                <td class="text-success font-weight-bold">@item.TienDaThanhToan.ToString("N0") VNĐ</td>
+                <td>@item.GiaDonHang.ToString("N0") VNĐ</td>
+                <td>
+                    @if (item.TrangThai.ToLower() == "thành công")
+                    {
+                        <span class="badge bg-success">@item.TrangThai</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">@item.TrangThai</span>
+                    }
+                </td>
+                <td>@item.ThoiGianThanhToan?.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.ThanhToanId" class="btn btn-info btn-sm">Chi Tiết</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

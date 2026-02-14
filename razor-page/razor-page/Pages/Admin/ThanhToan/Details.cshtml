@@ -1,0 +1,74 @@
+﻿@page
+@model razor_page.Pages.Admin.ThanhToan.DetailsModel
+@{
+    ViewData["Title"] = "Chi Tiết Thanh Toán";
+}
+
+<h1>Chi Tiết Giao Dịch Thanh Toán</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Thông Tin Giao Dịch</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Mã Giao Dịch ID</dt>
+                    <dd class="col-sm-8">@Model.ThanhToan.ThanhToanId</dd>
+
+                    <dt class="col-sm-4">Tiền Thanh Toán</dt>
+                    <dd class="col-sm-8 text-success font-weight-bold">@Model.ThanhToan.TienDaThanhToan.ToString("N0") VNĐ</dd>
+
+                    <dt class="col-sm-4">Trạng Thái</dt>
+                    <dd class="col-sm-8">@Model.ThanhToan.TrangThai</dd>
+
+                    <dt class="col-sm-4">Ngày Thanh Toán</dt>
+                    <dd class="col-sm-8">@Model.ThanhToan.ThoiGianThanhToan?.ToString("dd/MM/yyyy HH:mm:ss")</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Thông Tin Đơn Hàng Liên Quan</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.ThanhToan.DonHang != null)
+                {
+                    <dl class="row">
+                        <dt class="col-sm-4">Mã Đơn</dt>
+                        <dd class="col-sm-8">@Model.ThanhToan.DonHang.DonHangId</dd>
+
+                        <dt class="col-sm-4">Tên Đơn</dt>
+                        <dd class="col-sm-8">@Model.ThanhToan.DonHang.TenDonHang</dd>
+
+                        <dt class="col-sm-4">Khách Hàng</dt>
+                        <dd class="col-sm-8">
+                            @(Model.ThanhToan.DonHang.NguoiDung?.TenNguoiDung ?? "N/A")
+                            <br />
+                            <small class="text-muted">@(Model.ThanhToan.DonHang.NguoiDung?.Email ?? "")</small>
+                        </dd>
+
+                        <dt class="col-sm-4">Sản Phẩm Hoa</dt>
+                        <dd class="col-sm-8">@(Model.ThanhToan.DonHang.Hoa?.TenHoa ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Tổng Giá Đơn</dt>
+                        <dd class="col-sm-8">@Model.ThanhToan.DonHang.GiaDonHang.ToString("N0") VNĐ</dd>
+                    </dl>
+                }
+                else
+                {
+                    <p class="text-danger">Không tìm thấy thông tin đơn hàng gốc.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-page="./Index" class="btn btn-secondary">Quay Lại Danh Sách</a>
+</div>

@@ -15,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<ServiceHoa>();
 builder.Services.AddScoped<ServiceNguoiDung>();
 builder.Services.AddScoped<ServiceDonHang>();
+builder.Services.AddScoped<ServiceThanhToan>();
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
