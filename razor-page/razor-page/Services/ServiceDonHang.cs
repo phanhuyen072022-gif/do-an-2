@@ -75,11 +75,28 @@ namespace razor_page.Services
         }
 
         // 6. Xử lý Thanh toán (Tạo bản ghi vào bảng ThanhToan)
-        public void ThanhToanDonHang(int donHangId, decimal soTien, string trangThai)
+        public (bool Success, string Message) ThanhToanDonHang(int donHangId, decimal soTien, string trangThai)
         {
-            var donHang = _context.DonHangs.Find(donHangId);
+            // Sử dụng GetById để lấy kèm cả danh sách ThanhToans (lịch sử thanh toán)
+            var donHang = GetById(donHangId);
             if (donHang != null)
             {
+                // Tính tổng tiền đã thanh toán trước đó
+                decimal tongDaThanhToan = donHang.ThanhToans.Sum(t => t.TienDaThanhToan);
+                decimal soTienConLai = donHang.GiaDonHang - tongDaThanhToan;
+
+                // Chặn nếu đơn đã thanh toán đủ
+                if (soTienConLai <= 0)
+                {
+                    return (false, "Đơn hàng này đã được thanh toán đủ. Không thể thanh toán thêm.");
+                }
+
+                // Chặn nếu nhập số tiền thanh toán lớn hơn số cần phải trả
+                if (soTien > soTienConLai)
+                {
+                    return (false, $"Số tiền vượt quá giới hạn. Đơn hàng chỉ còn nợ: {soTienConLai:N0}");
+                }
+
                 var thanhToan = new ThanhToan
                 {
                     DonHangId = donHangId,
@@ -90,7 +107,10 @@ namespace razor_page.Services
                 };
                 _context.ThanhToans.Add(thanhToan);
                 _context.SaveChanges();
+
+                return (true, "Thanh toán thành công");
             }
+            return (false, "Không tìm thấy đơn hàng");
         }
 
         // Helper: Lấy danh sách Hoa và User cho Dropdown

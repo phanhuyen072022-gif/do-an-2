@@ -1,7 +1,10 @@
 ﻿@page
 @model razor_page.Pages.Admin.DonHang.CreateModel
+@inject razor_page.Services.ServiceDonHang _service
 @{
     ViewData["Title"] = "Tạo Đơn Hàng";
+    // Lấy trước danh sách hoa để truyền giá tiền sang cho Javascript xử lý
+    var danhSachHoa = _service.GetListHoa();
 }
 
 <h1>Tạo mới Đơn Hàng</h1>
@@ -22,11 +25,11 @@
             </div>
             <div class="form-group mb-3">
                 <label asp-for="DonHang.SoLuong" class="control-label">Số Lượng</label>
-                <input asp-for="DonHang.SoLuong" class="form-control" type="number" />
+                <input asp-for="DonHang.SoLuong" class="form-control" type="number" min="1" value="1" />
             </div>
             <div class="form-group mb-3">
-                <label asp-for="DonHang.GiaDonHang" class="control-label">Giá Đơn Hàng (Để 0 để tự tính)</label>
-                <input asp-for="DonHang.GiaDonHang" class="form-control" type="number" />
+                <label asp-for="DonHang.GiaDonHang" class="control-label">Tổng tiền đơn hàng (VNĐ)</label>
+                <input asp-for="DonHang.GiaDonHang" class="form-control" type="number" readonly style="background-color: #e9ecef;" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Tạo" class="btn btn-primary" />
@@ -35,3 +38,47 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            // Tạo một danh sách (Dictionary) chứa ID hoa và Giá bán do C# render ra
+            var giaHoaDict = {
+        @foreach (var hoa in danhSachHoa)
+        {
+            <text>'@hoa.HoaId': @hoa.GiaBan,</text>
+        }
+            };
+
+            // Hàm tính toán tổng tiền
+            function tinhTongTien() {
+                var hoaId = $('#DonHang_HoaId').val();
+                var soLuong = $('#DonHang_SoLuong').val();
+
+                // Lấy giá trị của loại hoa đang chọn, nếu không có thì mặc định là 0
+                var gia = giaHoaDict[hoaId] || 0;
+                var tongTien = gia * (soLuong || 0);
+
+                // Điền tổng tiền đã tự động tính được vào ô hiển thị
+                $('#DonHang_GiaDonHang').val(tongTien);
+            }
+
+            // Bắt sự kiện khi người dùng thay đổi loại Hoa
+            $('#DonHang_HoaId').change(function () {
+                tinhTongTien();
+            });
+
+            // Bắt sự kiện khi người dùng nhập/thay đổi Số lượng
+            $('#DonHang_SoLuong').on('input change', function () {
+                tinhTongTien();
+            });
+
+            // Gọi hàm tính tiền ngay khi vừa load xong trang để hiển thị chính xác giá khởi điểm
+            tinhTongTien();
+        });
+    </script>
+}

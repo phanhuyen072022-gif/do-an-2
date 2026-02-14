@@ -25,11 +25,22 @@ namespace razor_page.Pages.Admin.DonHang
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid) return Page(); // Hoặc bỏ qua check strict nếu model phức tạp
+            // Bỏ qua lỗi validate các thuộc tính Navigation (vì form chỉ gửi lên Id)
+            ModelState.Remove("DonHang.Hoa");
+            ModelState.Remove("DonHang.NguoiDung");
+            ModelState.Remove("DonHang.ThanhToans");
 
-            // Tính giá đơn hàng tự động (Option)
+            if (!ModelState.IsValid)
+            {
+                // Phải load lại dropdown list nếu có lỗi, tránh bị crash view
+                NguoiDungList = new SelectList(_service.GetListNguoiDung(), "NguoiDungId", "TenNguoiDung");
+                HoaList = new SelectList(_service.GetListHoa(), "HoaId", "TenHoa");
+                return Page();
+            }
+
+            // Tự động tính tổng giá đơn hàng = Giá bán của hoa * Số lượng
             var hoa = _service.GetListHoa().FirstOrDefault(h => h.HoaId == DonHang.HoaId);
-            if (hoa != null && DonHang.GiaDonHang == 0)
+            if (hoa != null)
             {
                 DonHang.GiaDonHang = hoa.GiaBan * DonHang.SoLuong;
             }
